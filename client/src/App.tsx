@@ -15,6 +15,8 @@ import Books from './components/Books/Books';
 import { StateType } from './reducers/reducer';
 import { fetchBooksAction } from './actions/book-actions';
 import { fetchSelectionsAction } from './actions/selection-actions';
+import { Wrapper } from './wrappers/Wrapper';
+import { ThemeContextProvider } from './contexts/ThemeContextProvider';
 
 const App = () => {
   const selections = useSelector((state: StateType) => state.selections);
@@ -26,7 +28,8 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <ThemeContextProvider>
+    <Wrapper>
       <div className="wrapper books_wrapper">
         <h2 className="page_title">Books</h2>
         <CreateBookForm />
@@ -45,7 +48,8 @@ const App = () => {
         )}
       </div>
       <ErrorModal />
-    </>
+    </Wrapper>
+    </ThemeContextProvider>
   );
 };
 

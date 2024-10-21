@@ -1,3 +1,13 @@
+.dark {
+  background-color: #272424;
+  color: antiquewhite;
+}
+
+.change_theme_btn {
+  position: sticky;
+  top: 0;
+}
+
 .wrapper {
   max-width: 700px;
   margin: 0 auto;
