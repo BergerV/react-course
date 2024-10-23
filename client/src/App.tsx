@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion } from 'react-bootstrap';
+import { Accordion, Button } from 'react-bootstrap';
 
 //components
 import Selection from './components/Selections/Selection';
@@ -13,7 +13,7 @@ import './App.css';
 import CreateBookForm from './components/Books/CreateBookForm';
 import Books from './components/Books/Books';
 import { StateType } from './reducers/reducer';
-import { fetchBooksAction } from './actions/book-actions';
+import { fetchBooksAction, stopAction } from './actions/book-actions';
 import { fetchSelectionsAction } from './actions/selection-actions';
 import { Wrapper } from './wrappers/Wrapper';
 import { ThemeContextProvider } from './contexts/ThemeContextProvider';
@@ -32,6 +32,7 @@ const App = () => {
     <Wrapper>
       <div className="wrapper books_wrapper">
         <h2 className="page_title">Books</h2>
+        <Button variant='danger' onClick={() => dispatch(stopAction)}>Stop this!</Button>
         <CreateBookForm />
         <Books />
       </div>

@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Formik } from 'formik';
-import { isObjectEmpty } from '../../utils/utils';
 import { createBookActionCreator } from '../../actions/book-actions';
-import { Dispatch, DispatchWithoutAction } from 'react';
+import { Dispatch, DispatchWithoutAction, useState } from 'react';
+import { ModalDialog } from '../Modal/ModalDialog';
 
 const CreateBookForm = () => {
   const dispatch = useDispatch();
-
+  const [error, setError] = useState(false);
   const onSubmit = async (
     values: any,
     {
@@ -18,14 +18,18 @@ const CreateBookForm = () => {
     },
   ) => {
     // no need to validate; we disable the button if form not valid
-    dispatch(
-      createBookActionCreator({
-        title: values.bookName,
-        author: values.bookAuthor,
-      }),
-    );
-    resetForm();
-    setSubmitting(false);
+    if (!values?.bookAuthor || !values?.bookName) {
+      setError(true);
+      return;
+    }
+      dispatch(
+        createBookActionCreator({
+          title: values.bookName,
+          author: values.bookAuthor,
+        }),
+      );
+      resetForm();
+      setSubmitting(false);
   };
 
   return (
@@ -53,7 +57,7 @@ const CreateBookForm = () => {
                 value={values.bookName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                validate={validateRequiredField}
+                //validate={validateRequiredField}
                 data-testid="bookName"
               />
               <ErrorMessage name="bookName">
@@ -71,7 +75,7 @@ const CreateBookForm = () => {
                 value={values.bookAuthor}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                validate={validateRequiredField}
+                //validate={validateRequiredField}
                 data-testid="bookAuthor"
               />
               <ErrorMessage name="bookAuthor">
@@ -81,9 +85,9 @@ const CreateBookForm = () => {
             <div className="create_book_form_add_btn_wrapper">
               <button
                 type="submit"
-                disabled={
-                  isObjectEmpty(touched) || !isObjectEmpty(errors) || isSubmitting
-                }
+                // disabled={
+                //   isObjectEmpty(touched) || !isObjectEmpty(errors) || isSubmitting
+                // }
                 className="btn btn-primary"
                 data-testid="bookSubmit"
               >
@@ -93,6 +97,13 @@ const CreateBookForm = () => {
           </form>
         )}
       </Formik>
+      {error &&
+        <ModalDialog
+          title='Error'
+          onClose={() => setError(false)}
+        >
+          ERROR
+        </ModalDialog>}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Book, StateType } from '../../reducers/reducer';
 import { useCallback } from 'react';
-import { removeBookActionCreator } from '../../actions/book-actions';
+import { fetchBookAction, removeBookActionCreator } from '../../actions/book-actions';
 
 const Books = () => {
   const books = useSelector((state: StateType) => state.books);
@@ -13,7 +13,7 @@ const Books = () => {
         key={idx}
         className="list-group-item d-flex justify-content-between align-items-center"
       >
-        <span>
+        <span onClick={() => book._id && dispatch(fetchBookAction(book._id))}>
           <strong>{book.title}</strong> by {book.author}
         </span>
         <span className="pull-right">

@@ -1,5 +1,5 @@
 import { Store } from 'redux';
-import { FETCH_BOOKS_FULFILLED } from '../actions/book-actions';
+import { FETCH_BOOK_SUCCESS, FETCH_BOOKS_FULFILLED } from '../actions/book-actions';
 import { FETCH_SELECTIONS_FULFILLED } from '../actions/selection-actions';
 import { SHOW_ERROR_MODAL } from '../actions/error-actions';
 
@@ -22,6 +22,7 @@ export interface Book {
 
 export interface StateType {
   books: Book[];
+  book?: Book;
   selections: {
     data: BookSelection[];
   };
@@ -54,6 +55,11 @@ export const reducer = (
       return {
         ...state,
         books: action.payload,
+      };
+    case FETCH_BOOK_SUCCESS:
+      return {
+        ...state,
+        book: action.payload,
       };
     case 'HIDE_ERROR_MODAL':
       return {

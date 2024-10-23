@@ -10,10 +10,12 @@ interface BookInSelectionProps {
 }
 
 const BookInSelection: FC<BookInSelectionProps> = ({ bookId, selectionId }) => {
-  const books = useSelector((state: StateType) => state.books);
   const dispatch = useDispatch();
 
-  const book = useMemo(() => books.find((el) => el._id === bookId), [books]);
+  const book = useSelector((state: StateType) => state.books
+    .find((el) => el._id === bookId)
+  );
+
 
   return (
     <div className="selection_list_item">
